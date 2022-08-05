@@ -1,0 +1,25 @@
+<div class="d-flex justify-content-between container-lg flex-column flex-md-row py-5 gap-2"> 
+  <div>
+    <h1>SimpleAir</h1>
+    <h6 class="fw-light">No fuss, one-way flights to major US airports</h6>
+  </div>
+
+  <%= form_with model: @flight, method: :get, class: "gap-2 d-flex flex-column container-xs select-form" do |f| %>
+
+    <div>
+      <%= f.label :departure_airport, hidden: true, class: "form-label" %>
+      <%= f.select :departure_airport, Airport.order(:code).pluck(:code), required: true, autofocus: true, autocomplete: "departure airport", prompt: "From", class: "form-select m-1 bg-primary" %>
+
+      <%= f.label :arrival_airport, hidden: true, class: "form-label" %>
+      <%= f.select :arrival_airport, Airport.order(:code).pluck(:code), required: true, autofocus: true, autocomplete: "departure airport", prompt: "To", class: "form-select" %>
+
+      <%= f.label :passenger_number, hidden: true, class: "form-label" %>
+      <%= f.select :arrival_airport, (1..4), required: true, autofocus: true, autocomplete: "passenger_number", prompt: "Passengers", class: "form-select" %>
+
+      <%= f.label :time, hidden: true, class: "form-label" %>
+      <%= f.date_select :time, required: true, autofocus: true, autocomplete: "time", start_year: Date.today.year, end_year: Date.today.year + 1, use_short_month: true, prompt: { day: 'Day', month: 'Month', year: 'Year' }, order: [:month, :day, :year], class: "form-select" %>
+    </div>
+
+    <%= f.submit "Search", class: "btn btn-primary" %>
+  <% end %>
+</div>

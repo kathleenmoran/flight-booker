@@ -22,7 +22,6 @@ TOP_TEN_FLIGHT_DURATIONS = {
 MAX_FLIGHTS_PER_ROUTE = 5
 
 def seed_airports
-  Airport.destroy_all
   TOP_TEN_FLIGHT_DURATIONS.each_key { |airport_code| Airport.create(code: airport_code) }
 end
 
@@ -30,8 +29,8 @@ def seed_flight(day, departure_airport, arrival_airport)
   Flight.create(
     departure_time: add_random_time_to_day(day),
     duration_in_min: TOP_TEN_FLIGHT_DURATIONS[departure_airport][arrival_airport],
-    departure_airport_id: Airport.find_by(code: departure_airport),
-    arrival_airport_id: Airport.find_by(code: arrival_airport)
+    departure_airport_id: Airport.find_by(code: departure_airport).id,
+    arrival_airport_id: Airport.find_by(code: arrival_airport).id
   )
 end
 
@@ -46,7 +45,6 @@ def seed_random_number_of_flights_on_day(day, departure_airport, arrival_airport
 end
 
 def seed_flights
-  Flight.destroy_all
   current_date = Date.today
   (current_date..current_date + 1.year).each do |day|
     TOP_TEN_FLIGHT_DURATIONS.each_key do |departure_airport|
@@ -57,5 +55,7 @@ def seed_flights
   end
 end
 
+Flight.destroy_all
+Airport.destroy_all
 seed_airports
 seed_flights
