@@ -19,6 +19,25 @@
   height: 40px;
  }
 
- .select-form {
-   max-width: 421px;
+ .select-form,
+ .headers {
+   width: 421px;
+ }
+
+ .booking-btn,
+ .flight-card {
+   width: 421px;
+ }
+
+ .booking-btn {
+  position: relative;
+  left: 10px;
+ }
+
+ .flight-card {
+  background-color: lightgrey;
+ }
+
+ .alert-container {
+  height: 90px;
  }

@@ -1,5 +1,29 @@
 class FlightsController < ApplicationController
   def index
-    @flights = Flight.all
+    if params && all_search_params_present_and_not_empty? && given_valid_date?
+      @flights = Flight.search(params)
+    elsif params[:searching]
+      if !all_search_params_present_and_not_empty?
+        flash.now.alert = "All fields in the search form are required."
+      elsif !given_valid_date?
+        flash.now.alert = "Invalid date."
+      end
+    end
+  end
+
+  private
+
+  def all_search_params_present_and_not_empty?
+    [:departure_airport_id, :arrival_airport_id, :ticket_num, "time(2i)", "time(3i)", "time(1i)"].all? do |key|
+      params.has_key?(key) && !params[key].empty?
+    end
+  end
+
+  def given_valid_date?
+    begin
+      Flight.array_to_date(params['time(2i)'], params['time(3i)'], params['time(1i)'])
+    rescue ArgumentError
+      return false
+    end
   end
 end

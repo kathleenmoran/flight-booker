@@ -1,25 +1,69 @@
-<div class="d-flex justify-content-between container-lg flex-column flex-md-row py-5 gap-2"> 
-  <div>
-    <h1>SimpleAir</h1>
-    <h6 class="fw-light">No fuss, one-way flights to major US airports</h6>
-  </div>
+<div class="alert-container mt-1 mx-1"> 
+  <% if alert %>
+    <p class="alert alert-danger"><%= alert %></p>
+  <% end %>
+</div>
 
-  <%= form_with model: @flight, method: :get, class: "gap-2 d-flex flex-column container-xs select-form" do |f| %>
-
-    <div>
-      <%= f.label :departure_airport, hidden: true, class: "form-label" %>
-      <%= f.select :departure_airport, Airport.order(:code).pluck(:code), required: true, autofocus: true, autocomplete: "departure airport", prompt: "From", class: "form-select m-1 bg-primary" %>
-
-      <%= f.label :arrival_airport, hidden: true, class: "form-label" %>
-      <%= f.select :arrival_airport, Airport.order(:code).pluck(:code), required: true, autofocus: true, autocomplete: "departure airport", prompt: "To", class: "form-select" %>
-
-      <%= f.label :passenger_number, hidden: true, class: "form-label" %>
-      <%= f.select :arrival_airport, (1..4), required: true, autofocus: true, autocomplete: "passenger_number", prompt: "Passengers", class: "form-select" %>
-
-      <%= f.label :time, hidden: true, class: "form-label" %>
-      <%= f.date_select :time, required: true, autofocus: true, autocomplete: "time", start_year: Date.today.year, end_year: Date.today.year + 1, use_short_month: true, prompt: { day: 'Day', month: 'Month', year: 'Year' }, order: [:month, :day, :year], class: "form-select" %>
+<div class="d-flex justify-content-center align-items-center mb-5">
+  <div class="d-flex justify-content-between container-lg flex-column flex-md-row py-0 align-items-center"> 
+    <div class="headers">
+      <h1>SimpleAir</h1>
+      <h6 class="fw-light">No fuss, one-way flights to major US airports</h6>
     </div>
 
-    <%= f.submit "Search", class: "btn btn-primary" %>
+    <%= form_with url: @flights_path, method: :get, class: "gap-2 d-flex flex-column container-xs select-form flex-shrink-0" do |f| %>
+
+      <div>
+        <%= f.label :departure_airport_id, hidden: true, class: "form-label" %>
+        <%= f.collection_select :departure_airport_id, Airport.order(:code), :id, :code, required: true, autofocus: true, autocomplete: "departure airport", prompt: "From", class: "form-select m-1 bg-primary" %>
+
+        <%= f.label :arrival_airport_id, hidden: true, class: "form-label" %>
+        <%= f.collection_select :arrival_airport_id, Airport.order(:code), :id, :code, required: true, autofocus: true, autocomplete: "departure airport", prompt: "To", class: "form-select" %>
+
+        <%= f.label :ticket_num, hidden: true, class: "form-label" %>
+        <%= f.select :ticket_num, (1..4), required: true, autofocus: true, autocomplete: "tickets", prompt: "Passengers", class: "form-select" %>
+
+        <%= f.label :time, hidden: true, class: "form-label" %>
+        <%= f.date_select :time, required: true, autofocus: true, autocomplete: "time", start_year: Date.today.year, end_year: Date.today.year + 1, use_short_month: true, prompt: { day: 'Day', month: 'Month', year: 'Year' }, order: [:month, :day, :year], class: "form-select" %>
+
+        <%= hidden_field_tag :searching, true %>
+      </div>
+
+      <%= f.submit "Search", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>
+
+<div class="">
+  <% if @flights && !@flights.empty? %>
+    <div class="text-center">
+      <h4>Outbound flights from <%= @flights.first.departure_airport.code %> to <%= @flights.first.arrival_airport.code %></h4>
+      <h6 class="fw-light"><%= @flights.first.departure_date %></h6>
+    </div>
+    <%= form_with url: @flights_path, method: :get, class: "d-flex flex-column align-items-center" do |f| %>
+      <% @flights.each do |flight| %>
+        <div class="d-flex justify-content-center align-items-center flex-basis-1">
+          <%= f.radio_button :flight_id, flight.id, class: "form-check-input" %>
+          <%= hidden_field_tag :ticket_num, params[:ticket_num] %>
+          <div class="text-center d-flex justify-content-between container-sm p-3 flight-card rounded m-3">
+            <div class="">
+              <div><%= flight.departure_hour %></div>
+              <div><%= flight.departure_airport.code %></div>
+            </div>
+            <div class="">
+              <div>Nonstop</div>
+              <div><%= flight.duration_in_words %></div>
+            </div>
+            <div class="">
+              <div><%= flight.arrival_hour %></div>
+              <div><%= flight.arrival_airport.code %></div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+      <%= f.submit "Book flight", class: "btn btn-primary booking-btn ml-1" %>
+    <% end %>
+  <% else %>
+    <p class="fw-light text-center">No available flights.</p>
   <% end %>
 </div>
