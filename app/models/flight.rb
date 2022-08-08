@@ -1,4 +1,6 @@
 class Flight < ApplicationRecord
+  default_scope { where('departure_time > ?', DateTime.current).order(:departure_time) }
+
   validates :departure_time, presence: true
   validates :duration_in_min, presence: true, length: { minimum: 1 }
 
