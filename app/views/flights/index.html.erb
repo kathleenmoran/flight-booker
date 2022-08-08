@@ -15,10 +15,10 @@
 
       <div>
         <%= f.label :departure_airport_id, hidden: true, class: "form-label" %>
-        <%= f.collection_select :departure_airport_id, Airport.order(:code), :id, :code, required: true, autofocus: true, autocomplete: "departure airport", prompt: "From", class: "form-select m-1 bg-primary" %>
+        <%= f.collection_select :departure_airport_id, Airport.all, :id, :code, required: true, autofocus: true, autocomplete: "departure airport", prompt: "From", class: "form-select m-1 bg-primary" %>
 
         <%= f.label :arrival_airport_id, hidden: true, class: "form-label" %>
-        <%= f.collection_select :arrival_airport_id, Airport.order(:code), :id, :code, required: true, autofocus: true, autocomplete: "departure airport", prompt: "To", class: "form-select" %>
+        <%= f.collection_select :arrival_airport_id, Airport.all, :id, :code, required: true, autofocus: true, autocomplete: "departure airport", prompt: "To", class: "form-select" %>
 
         <%= f.label :ticket_num, hidden: true, class: "form-label" %>
         <%= f.select :ticket_num, (1..4), required: true, autofocus: true, autocomplete: "tickets", prompt: "Passengers", class: "form-select" %>

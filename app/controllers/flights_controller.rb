@@ -1,6 +1,6 @@
 class FlightsController < ApplicationController
   def index
-    if params && all_search_params_present_and_not_empty? && given_valid_date? && given_upcoming_date?
+    if params && all_search_params_present_and_not_empty? && given_valid_date? && given_upcoming_date? && !same_airports?
       @flights = Flight.search(params)
     elsif params[:searching]
       if !all_search_params_present_and_not_empty?
@@ -9,6 +9,8 @@ class FlightsController < ApplicationController
         flash.now.alert = "This date has already passed."
       elsif !given_valid_date?
         flash.now.alert = "Invalid date."
+      elsif same_airports?
+        flash.now.alert = "The departure and arrival airports cannot be the same."
       end
     end
   end
@@ -31,5 +33,9 @@ class FlightsController < ApplicationController
 
   def given_upcoming_date?
     Flight.array_to_date(params['time(2i)'], params['time(3i)'], params['time(1i)']) >= Date.today
+  end
+
+  def same_airports?
+    params[:departure_airport_id] == params[:departure_airport_id]
   end
 end
