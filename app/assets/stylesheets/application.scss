@@ -34,10 +34,15 @@
   left: 10px;
  }
 
- .flight-card {
+ .flight-card,
+ .booking-card {
   background-color: lightgrey;
  }
 
  .alert-container {
   height: 90px;
+ }
+
+ .booking-card {
+  max-width: 600px;
  }

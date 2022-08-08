@@ -4,6 +4,7 @@ class Flight < ApplicationRecord
 
   belongs_to :departure_airport, class_name: 'Airport', inverse_of: :departure_flights
   belongs_to :arrival_airport, class_name: 'Airport', inverse_of: :arrival_flights
+  has_many :bookings
 
   def self.search(params)
     target_date = array_to_date(params['time(2i)'], params['time(3i)'], params['time(1i)'])
@@ -24,11 +25,11 @@ class Flight < ApplicationRecord
   end
 
   def departure_hour
-    departure_time.strftime('%H:%M %p')
+    departure_time.strftime('%I:%M %p')
   end
 
   def arrival_hour
-    (departure_time + duration_in_min.minutes).strftime('%H:%M %p')
+    (departure_time + duration_in_min.minutes).strftime('%I:%M %p')
   end
 
   def duration_in_words
