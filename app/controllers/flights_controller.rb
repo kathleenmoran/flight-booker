@@ -36,6 +36,6 @@ class FlightsController < ApplicationController
   end
 
   def same_airports?
-    params[:departure_airport_id] == params[:departure_airport_id]
+    params[:departure_airport_id] == params[:arrival_airport_id]
   end
 end
