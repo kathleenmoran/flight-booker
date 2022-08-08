@@ -1,10 +1,12 @@
 class FlightsController < ApplicationController
   def index
-    if params && all_search_params_present_and_not_empty? && given_valid_date?
+    if params && all_search_params_present_and_not_empty? && given_valid_date? && given_upcoming_date?
       @flights = Flight.search(params)
     elsif params[:searching]
       if !all_search_params_present_and_not_empty?
         flash.now.alert = "All fields in the search form are required."
+      elsif !given_upcoming_date?
+        flash.now.alert = "This date has already passed."
       elsif !given_valid_date?
         flash.now.alert = "Invalid date."
       end
@@ -25,5 +27,9 @@ class FlightsController < ApplicationController
     rescue ArgumentError
       return false
     end
+  end
+
+  def given_upcoming_date?
+    Flight.array_to_date(params['time(2i)'], params['time(3i)'], params['time(1i)']) >= Date.today
   end
 end
