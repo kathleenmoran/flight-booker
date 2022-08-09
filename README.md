@@ -1,3 +1,3 @@
 # Simple Flights
 
-![hippo](https://media.giphy.com/media/g30qnumn9sA9j6HCCD/giphy.gif)
+![hippo](https://media.giphy.com/media/91kv1xKGaKCWKSsJ6i/giphy.gif)
