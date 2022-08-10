@@ -6,7 +6,7 @@ See a live version of this webiste [here](http://www.simple-flights.com/).
 
 ## Demo
 
-![demo](https://gfycat.com/fairbackgardensnake.gif)
+<iframe src='https://gfycat.com/ifr/FairBackGardensnake' frameborder='0' scrolling='no' allowfullscreen width='640' height='529'></iframe>
 
 ## Features
 
