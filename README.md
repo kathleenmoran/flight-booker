@@ -6,7 +6,7 @@ See a live version of this webiste [here](http://www.simple-flights.com/).
 
 ## Demo
 
-![demo](https://gfycat.com/fairbackgardensnake)
+![demo](https://gfycat.com/fairbackgardensnake.gif)
 
 ## Features
 
