@@ -1,6 +1,6 @@
 # Simple Flights
 
-A website that simulate's an airline's flight booker.
+A website that simulate's an airline's online flight booking system.
 
 See a live version of this webiste [here](http://www.simple-flights.com/).
 
