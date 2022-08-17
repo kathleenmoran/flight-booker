@@ -11,15 +11,18 @@ default: &default
 
 development:
   <<: *default
-  database: <%= ENV['DATABASE_URL'] %>
+  database: simple_flights_development
+    url: <%= ENV['DATABASE_URL'] %>
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: <%= ENV['DATABASE_URL'] %>
+  database: simple_flights_test
+    url: <%= ENV['DATABASE_URL'] %>
 
 production:
   <<: *default
-  database: <%= ENV['DATABASE_URL'] %>
+  database: simple_flights_production
+  url: <%= ENV['DATABASE_URL'] %>
